@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aman | Cloud Computing Portfolio</title>
+  <meta name="description" content="Cloud Computing student portfolio for internships and co-op opportunities." />
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg2: #0c1830;
+      --card: rgba(15, 25, 50, 0.66);
+      --card-border: rgba(130, 190, 255, 0.18);
+      --text: #e9f4ff;
+      --muted: #9fb8d8;
+      --blue: #53b7ff;
+      --cyan: #53f2ff;
+      --purple: #8e7dff;
+      --violet: #c26eff;
+      --glow: 0 0 30px rgba(83, 183, 255, 0.25);
+      --radius: 22px;
+      --shadow: 0 10px 35px rgba(0,0,0,.35);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(83,183,255,.16), transparent 22%),
+        radial-gradient(circle at 80% 15%, rgba(194,110,255,.14), transparent 20%),
+        radial-gradient(circle at 50% 80%, rgba(83,242,255,.10), transparent 24%),
+        linear-gradient(160deg, var(--bg), var(--bg2));
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.4), transparent 85%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particles, .blobs {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.75);
+      box-shadow: 0 0 14px rgba(83, 242, 255, .7);
+      animation: floatUp linear infinite;
+      opacity: 0.55;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(100vh) scale(0.8); }
+      to { transform: translateY(-20vh) scale(1.2); }
+    }
+
+    .blob {
+      position: absolute;
+      filter: blur(60px);
+      opacity: .15;
+      border-radius: 50%;
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+
+    .blob.one { width: 280px; height: 280px; left: -60px; top: 8%; background: var(--blue); }
+    .blob.two { width: 340px; height: 340px; right: -80px; top: 22%; background: var(--violet); animation-duration: 22s; }
+    .blob.three { width: 300px; height: 300px; left: 30%; bottom: -60px; background: var(--cyan); animation-duration: 20s; }
+
+    @keyframes drift {
+      0% { transform: translate(0,0) scale(1); }
+      100% { transform: translate(40px,-30px) scale(1.12); }
+    }
+
+    .wrap { position: relative; z-index: 1; }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .nav-shell {
+      position: sticky;
+      top: 16px;
+      z-index: 50;
+      padding-top: 16px;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border: 1px solid var(--card-border);
+      background: rgba(8, 18, 35, 0.6);
+      backdrop-filter: blur(16px);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: .3px;
+      min-width: fit-content;
+    }
+
+    .brand-cloud {
+      width: 42px;
+      height: 30px;
+      position: relative;
+      background: linear-gradient(135deg, rgba(83,183,255,.7), rgba(142,125,255,.7));
+      border-radius: 999px;
+      box-shadow: var(--glow);
+    }
+    .brand-cloud::before,
+    .brand-cloud::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: inherit;
+    }
+    .brand-cloud::before { width: 22px; height: 22px; left: 2px; top: -8px; }
+    .brand-cloud::after { width: 24px; height: 24px; right: 4px; top: -10px; }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .cloud-link {
+      color: var(--text);
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      transition: .28s ease;
+      font-size: .95rem;
+    }
+
+    .cloud-link:hover,
+    .cloud-link.active {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, rgba(83,183,255,.22), rgba(194,110,255,.18));
+      box-shadow: 0 0 22px rgba(83,183,255,.22);
+      border-color: rgba(83,183,255,.28);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 28px;
+      align-items: center;
+      padding: 72px 0 48px;
+      min-height: 88vh;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(83,183,255,.25);
+      background: rgba(83,183,255,.08);
+      color: var(--cyan);
+      font-size: .92rem;
+      margin-bottom: 18px;
+      box-shadow: var(--glow);
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 5rem);
+      line-height: 1.04;
+      margin: 0 0 16px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #ffffff, var(--cyan), var(--blue), var(--violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.06rem;
+      line-height: 1.75;
+      max-width: 680px;
+      margin-bottom: 28px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      padding: 14px 22px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.1);
+      transition: .28s ease;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, rgba(83,183,255,.88), rgba(142,125,255,.88));
+      box-shadow: 0 10px 30px rgba(83,183,255,.2);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 14px 30px rgba(83,183,255,.18);
+    }
+
+    .social-mini {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .social-mini a {
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.08);
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      transition: .25s ease;
+    }
+
+    .social-mini a:hover { background: rgba(83,183,255,.12); transform: translateY(-2px); }
+
+    .hero-visual {
+      position: relative;
+      min-height: 480px;
+      display: grid;
+      place-items: center;
+    }
+
+    .cloud-core {
+      position: relative;
+      width: min(420px, 90%);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255,255,255,.28), transparent 26%),
+        radial-gradient(circle at 50% 50%, rgba(83,183,255,.22), transparent 58%),
+        linear-gradient(135deg, rgba(83,183,255,.18), rgba(142,125,255,.18));
+      border: 1px solid rgba(255,255,255,.1);
+      box-shadow: inset 0 0 70px rgba(83,183,255,.18), 0 0 60px rgba(83,183,255,.12);
+      display: grid;
+      place-items: center;
+      animation: pulse 5s ease-in-out infinite;
+      overflow: visible;
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-8px) scale(1.02); }
+    }
+
+    .cloud-center {
+      width: 62%;
+      height: 32%;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(83,183,255,.9), rgba(194,110,255,.8));
+      position: relative;
+      box-shadow: 0 0 36px rgba(83,183,255,.36);
+    }
+    .cloud-center::before,
+    .cloud-center::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: inherit;
+    }
+    .cloud-center::before { width: 34%; height: 90%; left: 10%; top: -42%; }
+    .cloud-center::after { width: 36%; height: 100%; right: 12%; top: -48%; }
+
+    .orbit {
+      position: absolute;
+      inset: 12%;
+      border-radius: 50%;
+      border: 1px dashed rgba(255,255,255,.15);
+      animation: spin 18s linear infinite;
+    }
+
+    .orbit.orbit2 { inset: 2%; animation-duration: 26s; }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .node {
+      position: absolute;
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(8, 16, 32, .76);
+      backdrop-filter: blur(12px);
+      color: var(--cyan);
+      box-shadow: var(--shadow);
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .n1 { top: -4px; left: 50%; transform: translateX(-50%); }
+    .n2 { right: 8px; top: 26%; }
+    .n3 { right: 18%; bottom: 6%; }
+    .n4 { left: 16%; bottom: 0; }
+    .n5 { left: 4px; top: 30%; }
+
+    section {
+      padding: 40px 0 26px;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      margin: 0 0 10px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      max-width: 760px;
+      line-height: 1.75;
+      margin: 0 0 28px;
+    }
+
+    .glass {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+    }
+
+    .about-grid,
+    .resume-grid,
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      padding: 24px;
+      transition: .28s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 34px rgba(83,183,255,.12);
+      border-color: rgba(83,183,255,.28);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.12rem;
+    }
+
+    .card p, .card li {
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .list-clean {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .list-clean li::before {
+      content: "✦";
+      color: var(--cyan);
+      margin-right: 10px;
+    }
+
+    .skills-grid, .projects-grid, .edu-grid, .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(83,183,255,.08);
+      border: 1px solid rgba(83,183,255,.16);
+      color: #d9f6ff;
+      transition: .25s ease;
+      font-size: .95rem;
+    }
+
+    .tag:hover {
+      transform: scale(1.05);
+      background: rgba(83,183,255,.16);
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 290px;
+    }
+
+    .project-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -35% auto;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(83,183,255,.22), transparent 60%);
+      pointer-events: none;
+    }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .meta-pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .project-links a,
+    .resume-box a,
+    .contact-link {
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 26px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: linear-gradient(var(--blue), var(--violet));
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 0 0 18px 10px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -23px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 18px rgba(83,242,255,.6);
+    }
+
+    .resume-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+    }
+
+    .contact-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .contact-link {
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      background: rgba(255,255,255,.04);
+      transition: .25s ease;
+      word-break: break-word;
+    }
+
+    .contact-link:hover {
+      transform: translateY(-3px);
+      background: rgba(83,183,255,.1);
+      border-color: rgba(83,183,255,.24);
+    }
+
+    .footer {
+      padding: 34px 0 60px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .75s ease, transform .75s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .about-grid,
+      .resume-grid,
+      .contact-grid,
+      .skills-grid,
+      .projects-grid,
+      .edu-grid,
+      .cert-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 54px;
+      }
+
+      .hero-visual { min-height: 380px; }
+      .nav { border-radius: 26px; align-items: flex-start; }
+      .nav-links { justify-content: flex-start; }
+    }
+
+    @media (max-width: 640px) {
+      .container { width: min(calc(100% - 20px), var(--max)); }
+      .nav { padding: 14px; }
+      h1 { font-size: 2.3rem; }
+      .btn { width: 100%; }
+      .cta-row { flex-direction: column; }
+      .social-mini { flex-direction: column; }
+      .cloud-link { font-size: .88rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+  <div class="blobs">
+    <div class="blob one"></div>
+    <div class="blob two"></div>
+    <div class="blob three"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="container nav-shell">
+      <nav class="nav">
+        <div class="brand">
+          <div class="brand-cloud"></div>
+          <span>Aman | Cloud Portfolio</span>
+        </div>
+        <div class="nav-links">
+          <a class="cloud-link" href="#home">Home</a>
+          <a class="cloud-link" href="#about">About</a>
+          <a class="cloud-link" href="#skills">Skills</a>
+          <a class="cloud-link" href="#projects">Projects</a>
+          <a class="cloud-link" href="#education">Education</a>
+          <a class="cloud-link" href="#resume">Resume</a>
+          <a class="cloud-link" href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+
+    <header class="container hero" id="home">
+      <div class="reveal show">
+        <div class="badge">☁ Open to Internship / Co-op Opportunities</div>
+        <h1>
+          Building a <span class="gradient-text">future in cloud computing</span>
+        </h1>
+        <p>
+          I’m <strong>Aman</strong>, a Cloud Computing student focused on cloud technologies, IT infrastructure, system administration, networking, and hands-on technical learning. I’m building practical skills through projects and labs in Microsoft 365, Windows Server, Active Directory, DHCP, DNS, virtualization, and cloud fundamentals.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#projects">View Projects</a>
+          <a class="btn btn-secondary" href="resume.pdf" download>Download Resume</a>
+          <a class="btn btn-secondary" href="#contact">Contact Me</a>
+        </div>
+        <div class="social-mini">
+          <a href="mailto:your-email@example.com">Email</a>
+          <a href="https://www.linkedin.com/in/your-linkedin/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href="https://github.com/your-github" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="cloud-core">
+          <div class="orbit"></div>
+          <div class="orbit orbit2"></div>
+          <div class="cloud-center"></div>
+          <div class="node n1">AWS</div>
+          <div class="node n2">M365</div>
+          <div class="node n3">DNS</div>
+          <div class="node n4">AD DS</div>
+          <div class="node n5">Azure</div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="about">
+        <div class="container">
+          <h2 class="section-title reveal">About Me</h2>
+          <p class="section-subtitle reveal">
+            This portfolio is designed to present my technical journey, academic projects, and professional goals as I prepare for internship and co-op opportunities in cloud computing and IT infrastructure.
+          </p>
+
+          <div class="about-grid">
+            <article class="card glass reveal">
+              <h3>Professional Summary</h3>
+              <p>
+                I am a Cloud Computing student with a growing foundation in cloud platforms, system administration, networking, and enterprise technologies. My hands-on experience includes Microsoft 365 administration, Windows Server configuration, Active Directory, DHCP, DNS, virtualization, and technical lab projects.
+              </p>
+            </article>
+
+            <article class="card glass reveal">
+              <h3>Career Objective</h3>
+              <p>
+                I am currently seeking internship and co-op opportunities where I can contribute, learn, and grow in cloud computing, technical support, infrastructure, and system administration roles. I aim to build real-world experience while continuously improving my cloud and IT skills.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills">
+        <div class="container">
+          <h2 class="section-title reveal">Skills & Technical Stack</h2>
+          <p class="section-subtitle reveal">
+            Core technical areas I am learning and applying through labs, coursework, and hands-on portfolio projects.
+          </p>
+
+          <div class="skills-grid">
+            <article class="card glass reveal">
+              <h3>Cloud & Platforms</h3>
+              <div class="skill-tags">
+                <span class="tag">Microsoft 365</span>
+                <span class="tag">Azure Fundamentals</span>
+                <span class="tag">AWS Fundamentals</span>
+                <span class="tag">Cloud Concepts</span>
+              </div>
+            </article>
+
+            <article class="card glass reveal">
+              <h3>System Administration</h3>
+              <div class="skill-tags">
+                <span class="tag">Windows Server</span>
+                <span class="tag">Active Directory</span>
+                <span class="tag">Group Policy</span>
+                <span class="tag">User Management</span>
+              </div>
+            </article>
+
+            <article class="card glass reveal">
+              <h3>Networking & Infra</h3>
+              <div class="skill-tags">
+                <span class="tag">DHCP</span>
+                <span class="tag">DNS</span>
+                <span class="tag">IP Addressing</span>
+                <span class="tag">Networking Basics</span>
+              </div>
+            </article>
+
+            <article class="card glass reveal">
+              <h3>Virtualization</h3>
+              <div class="skill-tags">
+                <span class="tag">VMware</span>
+                <span class="tag">Hyper-V</span>
+                <span class="tag">Virtual Machines</span>
+              </div>
+            </article>
+
+            <article class="card glass reveal">
+              <h3>Tools</h3>
+              <div class="skill-tags">
+                <span class="tag">GitHub</span>
+                <span class="tag">PowerShell</span>
+                <span class="tag">Cisco Packet Tracer</span>
+                <span class="tag">Microsoft Admin Center</span>
+              </div>
+            </article>
+
+            <article class="card glass reveal">
+              <h3>Foundations</h3>
+              <div class="skill-tags">
+                <span class="tag">Linux Basics</span>
+                <span class="tag">Troubleshooting</span>
+                <span class="tag">Documentation</span>
+                <span class="tag">Technical Support</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="container">
+          <h2 class="section-title reveal">Projects</h2>
+          <p class="section-subtitle reveal">
+            A mix of hands-on labs, system administration work, cloud-related learning, and portfolio development projects.
+          </p>
+
+          <div class="projects-grid">
+            <article class="card glass project-card reveal">
+              <h3>Microsoft 365 Administration Project</h3>
+              <p>
+                Managed users, groups, release preferences, email tasks, and administration workflows in a Microsoft 365 environment to build real-world cloud administration familiarity.
+              </p>
+              <div class="project-meta">
+                <span class="meta-pill">Microsoft 365</span>
+                <span class="meta-pill">Admin Center</span>
+                <span class="meta-pill">User Management</span>
+              </div>
+              <ul class="list-clean">
+                <li>Created and managed users and groups</li>
+                <li>Configured settings and administrative preferences</li>
+                <li>Worked with mail-related tasks and tracking</li>
+              </ul>
+              <div class="project-links">
+                <a class="btn btn-secondary" href="#">Add GitHub Link</a>
+              </div>
+            </article>
+
+            <article class="card glass project-card reveal">
+              <h3>Windows Server & Active Directory Lab</h3>
+              <p>
+                Configured Windows Server services and practiced core infrastructure tasks including domain services, administrative configuration, and server role management.
+              </p>
+              <div class="project-meta">
+                <span class="meta-pill">Windows Server</span>
+                <span class="meta-pill">AD DS</span>
+                <span class="meta-pill">System Admin</span>
+              </div>
+              <ul class="list-clean">
+                <li>Worked with server configuration tasks</li>
+                <li>Explored Active Directory and domain concepts</li>
+                <li>Built hands-on system administration knowledge</li>
+              </ul>
+              <div class="project-links">
+                <a class="btn btn-secondary" href="#">Add Project Images</a>
+              </div>
+            </article>
+
+            <article class="card glass project-card reveal">
+              <h3>DHCP & DNS Infrastructure Configuration</h3>
+              <p>
+                Practiced configuring key network services essential to enterprise IT environments, strengthening understanding of addressing, name resolution, and infrastructure support.
+              </p>
+              <div class="project-meta">
+                <span class="meta-pill">DHCP</span>
+                <span class="meta-pill">DNS</span>
+                <span class="meta-pill">Networking</span>
+              </div>
+              <ul class="list-clean">
+                <li>Configured core network service concepts</li>
+                <li>Learned practical infrastructure dependencies</li>
+                <li>Improved troubleshooting awareness</li>
+              </ul>
+              <div class="project-links">
+                <a class="btn btn-secondary" href="#">Add Details</a>
+              </div>
+            </article>
+
+            <article class="card glass project-card reveal">
+              <h3>Help Desk & IT Policy Work</h3>
+              <p>
+                Built documentation and support-oriented material to reflect help desk structure, communication, and technical support responsibilities in IT environments.
+              </p>
+              <div class="project-meta">
+                <span class="meta-pill">Help Desk</span>
+                <span class="meta-pill">Documentation</span>
+                <span class="meta-pill">Support</span>
+              </div>
+              <ul class="list-clean">
+                <li>Created support-related documentation</li>
+                <li>Focused on clarity and professional structure</li>
+                <li>Strengthened operational understanding</li>
+              </ul>
+              <div class="project-links">
+                <a class="btn btn-secondary" href="#">Add File Link</a>
+              </div>
+            </article>
+
+            <article class="card glass project-card reveal">
+              <h3>Cloud / Static Website Project</h3>
+              <p>
+                Developed a personal portfolio website to present technical projects, learning progress, and career goals in a strong digital format for recruiters and employers.
+              </p>
+              <div class="project-meta">
+                <span class="meta-pill">HTML</span>
+                <span class="meta-pill">CSS</span>
+                <span class="meta-pill">GitHub Pages</span>
+              </div>
+              <ul class="list-clean">
+                <li>Designed a futuristic cloud-themed portfolio</li>
+                <li>Created sections for projects and resume</li>
+                <li>Focused on professional online presence</li>
+              </ul>
+              <div class="project-links">
+                <a class="btn btn-secondary" href="#">Live Demo</a>
+              </div>
+            </article>
+
+            <article class="card glass project-card reveal">
+              <h3>Portfolio Expansion Space</h3>
+              <p>
+                Reserve this section for future internship work, cloud labs, AWS or Azure projects, automation tasks, or scripting-based portfolio additions.
+              </p>
+              <div class="project-meta">
+                <span class="meta-pill">Future Project</span>
+                <span class="meta-pill">Cloud</span>
+                <span class="meta-pill">Automation</span>
+              </div>
+              <ul class="list-clean">
+                <li>Add upcoming internship project work</li>
+                <li>Showcase cloud certification labs</li>
+                <li>Expand technical credibility over time</li>
+              </ul>
+              <div class="project-links">
+                <a class="btn btn-secondary" href="#">Coming Soon</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="education">
+        <div class="container">
+          <h2 class="section-title reveal">Education</h2>
+          <p class="section-subtitle reveal">
+            Academic background, technical focus, and current direction in cloud computing.
+          </p>
+
+          <div class="edu-grid">
+            <article class="card glass reveal">
+              <h3>Cloud Computing Postgraduate Program</h3>
+              <div class="timeline">
+                <div class="timeline-item">
+                  <strong>George Brown College</strong>
+                  <p>Postgraduate studies focused on cloud computing technologies, enterprise systems, and hands-on technical labs.</p>
+                </div>
+                <div class="timeline-item">
+                  <strong>Relevant Learning Areas</strong>
+                  <p>Windows Server, Microsoft 365, virtualization, networking, infrastructure services, and cloud foundations.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="card glass reveal">
+              <h3>Computer Science Background</h3>
+              <p>
+                Prior academic foundation in computer science helped build the basics of computing, technical problem-solving, and software understanding, now being redirected into a cloud-focused career path.
+              </p>
+            </article>
+
+            <article class="card glass reveal">
+              <h3>Learning Mindset</h3>
+              <p>
+                I am actively developing practical experience through labs, portfolio projects, technical documentation, and cloud-focused self-learning to become job-ready for internship and co-op opportunities.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="resume">
+        <div class="container">
+          <h2 class="section-title reveal">Resume</h2>
+          <p class="section-subtitle reveal">
+            A quick overview of my profile and a downloadable copy for recruiters and hiring teams.
+          </p>
+
+          <div class="resume-grid">
+            <article class="card glass resume-box reveal">
+              <div>
+                <h3>Resume Snapshot</h3>
+                <p>
+                  Download my resume to view my education, technical skills, project experience, cloud learning direction, and contact information in a recruiter-friendly format.
+                </p>
+              </div>
+              <div class="project-links">
+                <a class="btn btn-primary" href="resume.pdf" download>Download Resume</a>
+              </div>
+            </article>
+
+            <article class="card glass reveal">
+              <h3>What Recruiters Will Find</h3>
+              <ul class="list-clean">
+                <li>Cloud Computing academic background</li>
+                <li>Microsoft 365 and Windows Server experience</li>
+                <li>Hands-on lab and project exposure</li>
+                <li>Technical support and infrastructure interest</li>
+                <li>Readiness for internship / co-op roles</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="certifications">
+        <div class="container">
+          <h2 class="section-title reveal">Certifications & Learning Journey</h2>
+          <p class="section-subtitle reveal">
+            A section to show current certifications, upcoming certifications, and focused skill development.
+          </p>
+
+          <div class="cert-grid">
+            <article class="card glass reveal">
+              <h3>Current Certification</h3>
+              <p>Add your current certification here, such as Azure Fundamentals or any completed technical certificate.</p>
+            </article>
+            <article class="card glass reveal">
+              <h3>Planned Certifications</h3>
+              <p>Add upcoming cloud certifications such as Azure, AWS, Microsoft, or other role-based credentials.</p>
+            </article>
+            <article class="card glass reveal">
+              <h3>Continuous Learning</h3>
+              <p>Use this area to mention self-learning, labs, online courses, GitHub work, or technical practice goals.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="container">
+          <h2 class="section-title reveal">Contact</h2>
+          <p class="section-subtitle reveal">
+            I am currently open to internship and co-op opportunities in cloud computing, IT infrastructure, technical support, and related roles.
+          </p>
+
+          <div class="contact-grid">
+            <article class="card glass contact-card reveal">
+              <h3>Get In Touch</h3>
+              <a class="contact-link" href="mailto:your-email@example.com">your-email@example.com</a>
+              <a class="contact-link" href="https://www.linkedin.com/in/your-linkedin/" target="_blank" rel="noreferrer">LinkedIn Profile</a>
+              <a class="contact-link" href="https://github.com/your-github" target="_blank" rel="noreferrer">GitHub Profile</a>
+            </article>
+
+            <article class="card glass reveal">
+              <h3>Message</h3>
+              <p>
+                Thank you for visiting my portfolio. I would be happy to connect regarding internship opportunities, technical projects, and entry-level roles in cloud computing and IT.
+              </p>
+              <div class="project-links">
+                <a class="btn btn-primary" href="mailto:your-email@example.com">Email Me</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container footer">
+      <p>Aman | Cloud Computing Student | Building toward Cloud & Infrastructure Opportunities</p>
+    </footer>
+  </div>
+
+  <script>
+    const particleWrap = document.getElementById('particles');
+    const particleCount = window.innerWidth < 768 ? 24 : 44;
+    for (let i = 0; i < particleCount; i++) {
+      const p = document.createElement('span');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = (10 + Math.random() * 16) + 's';
+      p.style.animationDelay = (Math.random() * 10) + 's';
+      p.style.opacity = (0.2 + Math.random() * 0.55).toFixed(2);
+      p.style.transform = `scale(${0.6 + Math.random() * 1.4})`;
+      particleWrap.appendChild(p);
+    }
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+
+    const sections = document.querySelectorAll('section, header[id]');
+    const links = document.querySelectorAll('.cloud-link');
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          links.forEach(link => link.classList.remove('active'));
+          const active = document.querySelector(`.cloud-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.45 });
+    sections.forEach(section => navObserver.observe(section));
+
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 10;
+      const y = (e.clientY / window.innerHeight - 0.5) * 10;
+      document.querySelectorAll('.blob').forEach((blob, idx) => {
+        blob.style.transform = `translate(${x * (idx + 1) * 0.8}px, ${y * (idx + 1) * 0.8}px)`;
+      });
+    });
+  </script>
+</body>
+</html>
